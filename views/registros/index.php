@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="d-grid">
-            <button class="btn btn-primary" type="submit">Registrarse</button>
+            <button class="btn btn-primary" type="submit" id="btnGuardar">Registrarse</button>
         </div>
     </form>
     <div class="mt-3">
