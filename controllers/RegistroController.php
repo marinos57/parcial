@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Exception;
 use Model\Registro;
+use Model\Rol;
 use MVC\Router;
 
 class RegistroController {
@@ -65,7 +66,7 @@ class RegistroController {
             $usu_id = $_POST['usu_id'];
             $rol_id = $_POST['rol_id'];
 
-            $usuario = Usuario::find($usu_id);
+            $usuario = Registro::find($usu_id);
             if (!$usuario) {
                 echo json_encode([
                     'mensaje' => 'Usuario no encontrado',
@@ -113,7 +114,7 @@ class RegistroController {
             $usu_id = $_POST['usu_id'];
             $nuevaContrasena = $_POST['nueva_contrasena'];
 
-            $usuario = Usuario::find($usu_id);
+            $usuario = Registro::find($usu_id);
             if (!$usuario) {
                 echo json_encode([
                     'mensaje' => 'Usuario no encontrado',
@@ -150,7 +151,7 @@ class RegistroController {
         try {
             $usu_id = $_POST['usu_id'];
 
-            $usuario = Usuario::find($usu_id);
+            $usuario = Registro::find($usu_id);
             if (!$usuario) {
                 echo json_encode([
                     'mensaje' => 'Usuario no encontrado',
@@ -187,7 +188,7 @@ class RegistroController {
         try {
             $usu_id = $_POST['usu_id'];
 
-            $usuario = Usuario::find($usu_id);
+            $usuario = Registro::find($usu_id);
             if (!$usuario) {
                 echo json_encode([
                     'mensaje' => 'Usuario no encontrado',
