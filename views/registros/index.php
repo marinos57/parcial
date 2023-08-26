@@ -1,6 +1,6 @@
 <h2 class="text-center mb-4 text-primary">Registro de usuario</h2>
 <div class="row justify-content-center">
-    <form class="col-lg-4 border rounded p-3" action="/ruta-de-tu-script-de-registro" method="POST">
+    <form class="col-lg-4 border rounded p-3" id="formularioRegistros">
         <div class="row mb-3">
             <div class="col">
                 <label for="usu_nombre" class="form-label">Nombre</label>
@@ -24,12 +24,12 @@
             </div>
         </div>
         <div class="d-grid">
-            <button class="btn btn-primary" type="submit" id="btnGuardar">Registrarse</button>
+            <button class="btn btn-primary" form="formularioRegistros" type="submit" id="btnGuardar">Registrarse</button>
         </div>
     </form>
     <div class="mt-3">
         <p class="mb-0 text-center">¿Ya tiene una cuenta?<a href="/datatable/login" class="text-primary fw-bold ms-2">Iniciar sesión</a></p>
     </div>
-    <script src="<?= asset('./build/js/registro/index.js') ?>"></script>
+    <script src="<?= asset('./build/js/registros/index.js') ?>"></script>
 </div>
 

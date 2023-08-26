@@ -13,7 +13,7 @@ $router->get('/', [AppController::class,'index']);
 
 
 //registros
-
+//$router->get('/', [RegistroController::class,'index']);
 $router->get('/registros',[RegistroController::class, 'index']);
 $router->post('/API/registros/guardar', [RegistroController::class,'guardarApi']);
 

@@ -3,13 +3,13 @@
 namespace Controllers;
 
 use Exception;
-use Model\Usuario;
+use Model\Registro;
 use MVC\Router;
 
 class RegistroController {
     public static function index(Router $router){
         // aqui se muestra el formulario de registro
-        $router->render('registro/index', []);
+        $router->render('registros/index', []);
     }
 
     public static function guardarApi(){
@@ -20,7 +20,7 @@ class RegistroController {
             $password = $_POST['usu_password'];
             
             // aqui se valida si ya existe un usuario con el mismo nombre de usuario
-            $usuarioExistente = Usuario::fetchFirst("SELECT * FROM usuario WHERE usu_usuario = '$usuario'");
+            $usuarioExistente = Registro::fetchFirst("SELECT * FROM usuario WHERE usu_usuario = '$usuario'");
             if ($usuarioExistente) {
                 echo json_encode([
                     'mensaje' => 'El nombre de usuario ya está en uso',
@@ -30,7 +30,7 @@ class RegistroController {
             }
 
             // aqui se crea un nuevo objeto Usuario para guardar en la base de datos
-            $nuevoUsuario = new Usuario([
+            $nuevoUsuario = new Registro([
                 'usu_nombre' => $nombre,
                 'usu_apellido' => $apellido,
                 'usu_usuario' => $usuario,

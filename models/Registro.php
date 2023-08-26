@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class Usuario extends ActiveRecord {
+class Registro extends ActiveRecord {
     protected static $tabla = 'usuario';
     protected static $columnasDB = ['USU_NOMBRE', 'USU_APELLIDO', 'USU_USUARIO', 'USU_PASSWORD', 'USU_SITUACION'];
     protected static $idTabla = 'USU_ID';
@@ -20,6 +20,6 @@ class Usuario extends ActiveRecord {
         $this->usu_apellido = $args['usu_apellido'] ?? '';
         $this->usu_usuario = $args['usu_usuario'] ?? '';
         $this->usu_password = $args['usu_password'] ?? '';
-        $this->usu_situacion = $args['usu_situacion'] ?? '';
+        $this->usu_situacion = $args['usu_situacion'] ?? 0;
     }
 }
