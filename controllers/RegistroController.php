@@ -61,7 +61,7 @@ class RegistroController {
         }
     }
       // Funcion para asignar y modificar rol a los usuarios
-      public static function asignarModificarRolApi() {
+      public static function asignarRolApi() {
         try {
             $usu_id = $_POST['usu_id'];
             $rol_id = $_POST['rol_id'];

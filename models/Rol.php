@@ -1,22 +1,19 @@
 <?php
+
 namespace Model;
 
-class Rol extends ActiveRecord {
-    protected static $tabla = 'rol'; 
-    protected static $columnasDB = ['ROL_NOMBRE', 'ROL_NOMBRE_CT', 'ROL_APP', 'ROL_SITUACION'];
-    protected static $idTabla = 'ROL_ID';
+class Asignacion extends ActiveRecord {
+    protected static $tabla = 'asignacion'; 
+    protected static $columnasDB = ['ASIGNA_USUARIO', 'ASIGNA_ROL'];
+    protected static $idTabla = 'ASIGNA_ID';
 
-    public $rol_id;
-    public $rol_nombre;
-    public $rol_nombre_ct;
-    public $rol_app;
-    public $rol_situacion;
+    public $asigna_id;
+    public $asigna_usuario;
+    public $asigna_rol;
 
     public function __construct($args = []) {
-        $this->rol_id = $args['rol_id'] ?? null;
-        $this->rol_nombre = $args['rol_nombre'] ?? '';
-        $this->rol_nombre_ct = $args['rol_nombre_ct'] ?? '';
-        $this->rol_app = $args['rol_app'] ?? '';
-        $this->rol_situacion = $args['rol_situacion'] ?? '';
+        $this->asigna_id = $args['asigna_id'] ?? null;
+        $this->asigna_usuario = $args['asigna_usuario'] ?? '';
+        $this->asigna_rol = $args['asigna_rol'] ?? '';
     }
 }
