@@ -60,11 +60,6 @@ const datatable = new Datatable('#tablaUsuarios', {
 
 
 
-
-
-
-
-
 const cambiarContrasena = async (e) => {
     const button = e.target;
     const id = button.dataset.id;
@@ -102,13 +97,13 @@ const cambiarContrasena = async (e) => {
     }
 };
 
-const asignarRol = async (e) => {
+const asignaRol = async (e) => {
     const button = e.target;
     const id = button.dataset.id;
    
     try {
-        //funcion para asignar rol
-        const url = `/datatable/API/registros/asignarRol/`;
+        //funcion para asigna rol
+        const url = `/datatable/API/registros/asignaRol/`;
         const config = {
             method: 'POST'
         };
@@ -145,7 +140,7 @@ const activarUsuario = async (e) => {
   
     try {
         // función del controlador para activar usuario
-        const url = `/datatable/API/registros/activar/`;
+        const url = `/datatable/API/registros/activarUsuario/`;
         const config = {
             method: 'POST'
         };
@@ -182,7 +177,7 @@ const desactivarUsuario = async (e) => {
     
     try {
         //  función del controlador para desactivar usuario
-        const url = `/datatable/API/registros/desactivar`;
+        const url = `/datatable/API/registros/desactivarUsuario`;
         const config = {
             method: 'POST'
         };
@@ -216,6 +211,6 @@ const desactivarUsuario = async (e) => {
 // Eventos
 
 datatable.on('click', '.btn-info[data-accion="cambiar-contrasena"]', cambiarContrasena);
-datatable.on('click', '.btn-primary[data-accion="asignar-rol"]', asignarRol);
+datatable.on('click', '.btn-primary[data-accion="asignar-rol"]', asignaRol);
 datatable.on('click', '.btn-success[data-accion="activar-usuario"]', activarUsuario);
 datatable.on('click', '.btn-danger[data-accion="desactivar-usuario"]', desactivarUsuario);

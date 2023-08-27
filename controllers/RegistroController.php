@@ -4,7 +4,7 @@ namespace Controllers;
 
 use Exception;
 use Model\Registro;
-use Model\Rol;
+use Model\Asignacion;
 use MVC\Router;
 
 class RegistroController {
@@ -60,8 +60,8 @@ class RegistroController {
             ]);
         }
     }
-      // Funcion para asignar y modificar rol a los usuarios
-      public static function asignarRolApi() {
+      // Función para asignar y modificar rol a los usuarios
+    public static function asignaRolApi() {
         try {
             $usu_id = $_POST['usu_id'];
             $rol_id = $_POST['rol_id'];
@@ -75,18 +75,12 @@ class RegistroController {
                 return;
             }
 
-            $rol = Rol::find($rol_id);
-            if (!$rol) {
-                echo json_encode([
-                    'mensaje' => 'Rol no encontrado',
-                    'codigo' => 0
-                ]);
-                return;
-            }
+            $asignacion = new Asignacion([
+                'asigna_usuario' => $usu_id,
+                'asigna_rol' => $rol_id
+            ]);
 
-            // Asignar el rol al usuario
-            $usuario->usu_rol = $rol_id;
-            $resultado = $usuario->actualizar();
+            $resultado = $asignacion->guardar();
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
@@ -108,6 +102,45 @@ class RegistroController {
         }
     }
 
+    public static function buscarApi()
+    {
+        $usu_nombre = $_GET['usu_nombre'];
+        $usu_apellido = $_GET['usu_apellido'];
+
+        $sql = "SELECT * FROM usuario";
+        $whereClause = "";
+
+        if ($usu_nombre || $usu_apellido) {
+            $whereClause = " WHERE";
+
+            if ($usu_nombre) {
+                $whereClause .= " usu_nombre LIKE '%$usu_nombre%'";
+            }
+
+            if ($usu_apellido) {
+                if ($usu_nombre) {
+                    $whereClause .= " AND";
+                }
+                $whereClause .= " usu_apellido LIKE '%$usu_apellido%'";
+            }
+        }
+
+        if (!empty($whereClause)) {
+            $sql .= $whereClause;
+        }
+
+        try {
+            $usuarios = Registro::fetchArray($sql);
+            header('Content-Type: application/json');
+            echo json_encode($usuarios);
+        } catch (Exception $e) {
+            echo json_encode([
+                'detalle' => $e->getMessage(),
+                'mensaje' => 'Ocurrió un error',
+                'codigo' => 0
+            ]);
+        }
+    }
     //  para cambiar la contraseña del usuario
     public static function cambiarContrasenaApi() {
         try {
