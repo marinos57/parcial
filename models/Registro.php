@@ -20,6 +20,6 @@ class Registro extends ActiveRecord {
         $this->usu_apellido = $args['usu_apellido'] ?? '';
         $this->usu_usuario = $args['usu_usuario'] ?? '';
         $this->usu_password = $args['usu_password'] ?? '';
-        $this->usu_situacion = $args['usu_situacion'] ?? 0;
+        $this->usu_situacion = $args['usu_situacion'] ?? '';
     }
 }

@@ -7,19 +7,22 @@ use Model\Registro;
 use Model\Asignacion;
 use MVC\Router;
 
-class RegistroController {
-    public static function index(Router $router){
+class RegistroController
+{
+    public static function index(Router $router)
+    {
         // aqui se muestra el formulario de registro
         $router->render('registros/index', []);
     }
 
-    public static function guardarApi(){
+    public static function guardarApi()
+    {
         try {
             $nombre = $_POST['usu_nombre'];
             $apellido = $_POST['usu_apellido'];
             $usuario = $_POST['usu_usuario'];
             $password = $_POST['usu_password'];
-            
+
             // aqui se valida si ya existe un usuario con el mismo nombre de usuario
             $usuarioExistente = Registro::fetchFirst("SELECT * FROM usuario WHERE usu_usuario = '$usuario'");
             if ($usuarioExistente) {
@@ -39,7 +42,7 @@ class RegistroController {
                 'usu_situacion' => 0 // Pendiente de activac
             ]);
 
-            $resultado = $nuevoUsuario->guardar(); 
+            $resultado = $nuevoUsuario->guardar();
 
             if ($resultado['resultado'] == 1) {
                 echo json_encode([
@@ -60,8 +63,9 @@ class RegistroController {
             ]);
         }
     }
-      // Función para asignar y modificar rol a los usuarios
-    public static function asignaRolApi() {
+    // Función para asignar y modificar rol a los usuarios
+    public static function asignaRolApi()
+    {
         try {
             $usu_id = $_POST['usu_id'];
             $rol_id = $_POST['rol_id'];
@@ -102,33 +106,35 @@ class RegistroController {
         }
     }
 
+
+
+
+
     public static function buscarApi()
     {
         $usu_nombre = $_GET['usu_nombre'];
         $usu_apellido = $_GET['usu_apellido'];
-
-        $sql = "SELECT * FROM usuario";
-        $whereClause = "";
-
-        if ($usu_nombre || $usu_apellido) {
-            $whereClause = " WHERE";
-
-            if ($usu_nombre) {
-                $whereClause .= " usu_nombre LIKE '%$usu_nombre%'";
-            }
-
-            if ($usu_apellido) {
-                if ($usu_nombre) {
-                    $whereClause .= " AND";
-                }
-                $whereClause .= " usu_apellido LIKE '%$usu_apellido%'";
-            }
+        $usu_usuario = $_GET['usu_usuario'];
+    
+        $whereClauses = array();
+    
+        if ($usu_nombre) {
+            $whereClauses[] = "usu_nombre LIKE '%$usu_nombre%'";
         }
-
-        if (!empty($whereClause)) {
-            $sql .= $whereClause;
+    
+        if ($usu_apellido) {
+            $whereClauses[] = "usu_apellido LIKE '%$usu_apellido%'";
         }
-
+    
+        if ($usu_usuario) {
+            $whereClauses[] = "usu_usuario LIKE '%$usu_usuario%'";
+        }
+        $sql = "SELECT usu_id, usu_nombre, usu_apellido, usu_usuario, usu_situacion FROM usuario"; 
+    
+        if (!empty($whereClauses)) {
+            $sql .= " WHERE " . implode(" AND ", $whereClauses);
+        }
+    
         try {
             $usuarios = Registro::fetchArray($sql);
             header('Content-Type: application/json');
@@ -141,8 +147,12 @@ class RegistroController {
             ]);
         }
     }
+    
+
+
     //  para cambiar la contraseña del usuario
-    public static function cambiarContrasenaApi() {
+    public static function cambiarContrasenaApi()
+    {
         try {
             $usu_id = $_POST['usu_id'];
             $nuevaContrasena = $_POST['nueva_contrasena'];
@@ -180,7 +190,8 @@ class RegistroController {
     }
 
     //  para activar usuario
-    public static function activarUsuarioApi() {
+    public static function activarUsuarioApi()
+    {
         try {
             $usu_id = $_POST['usu_id'];
 
@@ -217,7 +228,8 @@ class RegistroController {
     }
 
     // para desactivar usuario
-    public static function desactivarUsuarioApi() {
+    public static function desactivarUsuarioApi()
+    {
         try {
             $usu_id = $_POST['usu_id'];
 
@@ -252,5 +264,4 @@ class RegistroController {
             ]);
         }
     }
-
 }

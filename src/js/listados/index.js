@@ -3,7 +3,7 @@ import Datatable from "datatables.net-bs5";
 import { lenguaje } from "../lenguaje";
 import { validarFormulario, Toast, confirmacion } from "../funciones";
 
-const formulario = document.querySelector('#formularioUsuarios');
+const formulario = document.querySelector('form');
 const btnModificar = document.getElementById('btnModificar');
 const btnGuardar = document.getElementById('btnGuardar');
 const btnCancelar = document.getElementById('btnCancelar');
@@ -13,16 +13,25 @@ btnModificar.parentElement.style.display = 'none';
 btnCancelar.disabled = true;
 btnCancelar.parentElement.style.display = 'none';
 
+let contador = 1
 const datatable = new Datatable('#tablaUsuarios', {
     language: lenguaje,
     data: null,
     columns: [
-        { title: 'NO', data: null },
-        { title: 'NOMBRE', data: 'usu_nombre' },
-        { title: 'APELLIDO', data: 'usu_apellido' },
-        { title: 'NOMBRE DE USUARIO', data: 'usu_usuario' },
-        { title: 'ROL', data: 'usu_rol' },
-        { title: 'ESTADO', data: 'usu_situacion' },
+        { title: 'NO', render : () => contador++},
+
+        { title: 'NOMBRE', 
+        data: 'usu_nombre' },
+
+        { title: 'APELLIDO', 
+        data: 'usu_apellido' },
+
+        { title: 'NOMBRE DE USUARIO', 
+        data: 'usu_usuario' },
+        // { title: 'ROL', 
+        // data: 'usu_rol' },
+        { title: 'ESTADO', 
+        data: 'usu_situacion' },
         { 
             title: 'CONTRASEÑA', 
             data: 'usu_id',
@@ -66,7 +75,7 @@ const cambiarContrasena = async (e) => {
  
     try {
         //funcion para cambiar
-        const url = `/datatable/API/registros/cambiarContrasena`;
+        const url = `/parcial/API/registros/cambiarContrasena`;
         const config = {
             method: 'POST'
         };
@@ -103,7 +112,7 @@ const asignaRol = async (e) => {
    
     try {
         //funcion para asigna rol
-        const url = `/datatable/API/registros/asignaRol/`;
+        const url = `/parcial/API/registros/asignaRol/`;
         const config = {
             method: 'POST'
         };
@@ -140,7 +149,7 @@ const activarUsuario = async (e) => {
   
     try {
         // función del controlador para activar usuario
-        const url = `/datatable/API/registros/activarUsuario/`;
+        const url = `/parcial/API/registros/activarUsuario/`;
         const config = {
             method: 'POST'
         };
@@ -177,7 +186,7 @@ const desactivarUsuario = async (e) => {
     
     try {
         //  función del controlador para desactivar usuario
-        const url = `/datatable/API/registros/desactivarUsuario`;
+        const url = `/parcial/API/registros/desactivarUsuario`;
         const config = {
             method: 'POST'
         };
@@ -207,6 +216,44 @@ const desactivarUsuario = async (e) => {
         console.log(error);
     }
 };
+
+
+
+const buscar = async () => {
+    let usu_nombre = formulario.usu_nombre.value;
+    let usu_apellido = formulario.usu_apellido.value;
+    let usu_usuario = formulario.usu_usuario.value;
+
+    const url = `/datatable/API/listados/buscar?usu_nombre=${usu_nombre}&usu_apellido=${usu_apellido}&usu_usuario=${usu_usuario}`;
+    
+    const config = {
+        method: 'GET'
+    }
+
+    try {
+        const respuesta = await fetch(url, config)
+        const data = await respuesta.text();
+
+        console.log(data);
+        datatable.clear().draw()
+        if(data){
+            contador = 1;
+            datatable.rows.add(data).draw();
+            
+        }else{
+            Toast.fire({
+                title : 'No se encontraron registros',
+                icon : 'info'
+            })
+        }
+       
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+buscar();
+
 
 // Eventos
 
